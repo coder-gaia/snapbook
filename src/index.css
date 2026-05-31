@@ -1274,3 +1274,28 @@ select.form-input {
   color: var(--color-gold);
   margin-bottom: 16px;
 }
+.input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  color: #fff;
+  padding: 0;
+}
+
+.password-toggle:hover {
+  opacity: 0.8;
+}

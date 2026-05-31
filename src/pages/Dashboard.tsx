@@ -46,7 +46,7 @@ export default function Dashboard() {
     <div>
       <div className="page-header">
         <h1 className="page-title">
-          Olá, {profile?.display_name?.split(' ')[0]} 👋
+          Olá, {profile?.display_name?.split(' ')[0]}!
         </h1>
         <p className="page-subtitle">Aqui está o resumo da sua agenda.</p>
       </div>
