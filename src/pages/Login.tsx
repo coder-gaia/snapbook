@@ -1,4 +1,4 @@
-import { useState, type FormEvent, type SetStateAction } from 'react'
+import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../components/ui/Button'
@@ -18,11 +18,8 @@ export default function Login() {
     try {
       await signIn(email, password)
       navigate('/app')
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError('Email ou senha incorretos.')
-      }
-    } finally { setLoading(false) }
+    } catch { setError('Email ou senha incorretos.') }
+    finally { setLoading(false) }
   }
 
   return (
@@ -33,9 +30,9 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="auth-form">
           <Input label="Email" type="email" placeholder="seu@email.com"
-            value={email} onChange={(e: { target: { value: SetStateAction<string> } }) => setEmail(e.target.value)} required />
+            value={email} onChange={e => setEmail(e.target.value)} required />
           <Input label="Senha" type="password" placeholder="••••••••"
-            value={password} onChange={(e: { target: { value: SetStateAction<string> } }) => setPassword(e.target.value)} required />
+            value={password} onChange={e => setPassword(e.target.value)} required />
           {error && <p className="form-error" style={{ textAlign: 'center' }}>{error}</p>}
           <Button type="submit" loading={loading} full>Entrar</Button>
         </form>

@@ -1,10 +1,5 @@
-// ── Button ───────────────────────────────────────────────────
 import { type ButtonHTMLAttributes, type ReactNode } from 'react'
-
-interface SpinnerProps { size?: 'lg' }
-export function Spinner({ size }: SpinnerProps) {
-  return <div className={`spinner ${size ? `spinner--${size}` : ''}`} />
-}
+import { Spinner } from './Spinner'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger'
@@ -13,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   full?:    boolean
   icon?:    ReactNode
 }
+
 export function Button({
   variant = 'primary', size = 'md', loading = false,
   full = false, icon, children, disabled, className = '', ...props

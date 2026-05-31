@@ -25,6 +25,8 @@ export default function Register() {
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message?.includes('already') ? 'Email já cadastrado.' : 'Erro ao criar conta.')
+      } else {
+        setError('Erro ao criar conta.')
       }
     } finally { setLoading(false) }
   }

@@ -1,14 +1,23 @@
 import { format, addMinutes, setHours, setMinutes } from 'date-fns'
 import type { Availability, BlockedDate, Booking } from '../types'
 
+type BookingAvailabilityData = Pick<
+  Booking,
+  'date' | 'status' | 'start_time' | 'end_time'
+>
+
 function timeToDate(base: Date, timeStr: string): Date {
   const [h, m] = timeStr.split(':').map(Number)
   return setMinutes(setHours(new Date(base), h), m)
 }
 
 export function generateSlots(
-  date: Date, availability: Availability[], blockedDates: BlockedDate[],
-  existingBookings: Booking[], serviceDurationMin: number, slotIntervalMin = 30,
+  date: Date,
+  availability: Availability[],
+  blockedDates: BlockedDate[],
+  existingBookings: BookingAvailabilityData[],
+  serviceDurationMin: number,
+  slotIntervalMin = 30,
 ): string[] {
   const dateStr = format(date, 'yyyy-MM-dd')
   if (blockedDates.some(b => b.blocked_date === dateStr)) return []
@@ -40,8 +49,11 @@ export function calcEndTime(startTime: string, durationMin: number): string {
 }
 
 export function hasAvailableSlots(
-  date: Date, availability: Availability[], blockedDates: BlockedDate[],
-  existingBookings: Booking[], serviceDurationMin: number,
+  date: Date,
+  availability: Availability[],
+  blockedDates: BlockedDate[],
+  existingBookings: BookingAvailabilityData[],
+  serviceDurationMin: number,
 ): boolean {
   return generateSlots(date, availability, blockedDates, existingBookings, serviceDurationMin).length > 0
 }
