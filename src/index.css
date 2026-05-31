@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
 :root {
   --color-bg: #0c0c10;
   --color-surface: #13131a;
@@ -18,7 +17,7 @@
   --color-warning-dim: rgba(232, 168, 56, 0.12);
   --color-danger: #e05c5c;
   --color-danger-dim: rgba(224, 92, 92, 0.12);
-  --font-display: "Playfair Display", Georgia, serif;
+  --font-display: "Bebas Neue", sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   --radius-sm: 6px;
