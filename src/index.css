@@ -1269,11 +1269,122 @@ select.form-input {
 .landing-feature-card:hover {
   border-color: var(--color-gold-border);
 }
-.landing-feature-icon {
-  font-size: 28px;
-  color: var(--color-gold);
+
+/* ── DatePicker ─────────────────────────────────────────────── */
+.date-picker {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.date-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 16px;
 }
+
+.date-picker-month {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-offwhite);
+  text-transform: capitalize;
+}
+
+.date-picker-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.date-picker-nav:hover:not(:disabled) {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+.date-picker-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.date-picker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.date-picker-weekday {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 0;
+}
+
+.date-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.date-picker-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  color: var(--color-muted-2);
+  cursor: default;
+  transition: all 0.15s;
+}
+
+.date-picker-day--outside {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.date-picker-day--today {
+  color: var(--color-offwhite);
+  font-weight: 700;
+}
+
+.date-picker-day--available {
+  color: var(--color-offwhite);
+  cursor: pointer;
+  background: var(--color-surface-2);
+}
+.date-picker-day--available:hover {
+  background: var(--color-gold-dim);
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold-border);
+}
+
+.date-picker-day--selected {
+  background: var(--color-gold) !important;
+  color: var(--color-bg) !important;
+  font-weight: 700;
+}
+.date-picker-day--selected:hover {
+  background: var(--color-gold);
+  color: var(--color-bg);
+}
+
 .input-wrapper {
   position: relative;
 }
