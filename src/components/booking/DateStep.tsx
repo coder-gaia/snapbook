@@ -7,11 +7,21 @@ import type {
   Service,
 } from '../../types'
 
+type PublicBooking = Pick<
+  Booking,
+  'id' |
+  'date' |
+  'start_time' |
+  'end_time' |
+  'status' |
+  'service_id'
+>
+
 interface Props {
   service: Service
   availability: Availability[]
   blockedDates: BlockedDate[]
-  existingBookings: Booking[]
+  existingBookings: PublicBooking[]
   selected: Date | null
   onSelect: (date: Date) => void
   onBack: () => void

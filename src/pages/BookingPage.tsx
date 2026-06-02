@@ -9,12 +9,11 @@ import { generateSlots, calcEndTime } from '../utils/timeSlots'
 import { Spinner } from '../components/ui/Spinner'
 import { Button } from '../components/ui/Button'
 import { ServiceStep }     from '../components/booking/ServiceStep'
-import { DatePicker }      from '../components/booking/DatePicker'
+import { DateStep }        from '../components/booking/DateStep'
 import { TimeStep }        from '../components/booking/TimeStep'
 import { ClientStep }      from '../components/booking/ClientStep'
 import { BookingProgress } from '../components/booking/BookingProgress'
 import { formatBRL, formatTime } from '../utils/formatters'
-import { calcEndTime as calcEnd } from '../utils/timeSlots'
 import type { Service } from '../types'
 
 type Step = 'service' | 'date' | 'time' | 'client' | 'confirm'
@@ -87,7 +86,6 @@ export default function BookingPage() {
 
   return (
     <div className="booking-page">
-      {/* Header */}
       <div className="booking-header">
         <div className="booking-header-inner">
           <div className="booking-avatar">
@@ -107,7 +105,6 @@ export default function BookingPage() {
         <BookingProgress current={step} />
       </div>
 
-      {/* Conteúdo */}
       <div className="booking-content">
         <AnimatePresence mode="wait">
           <motion.div key={step}
@@ -115,27 +112,22 @@ export default function BookingPage() {
             exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.2 }}>
 
             {step === 'service' && (
-              <ServiceStep services={services} onSelect={s => { setService(s); setStep('date') }} />
+              <ServiceStep
+                services={services}
+                onSelect={s => { setService(s); setStep('date') }}
+              />
             )}
 
             {step === 'date' && service && (
-              <div>
-                <h2 className="booking-step-title">Escolha a data</h2>
-                <p className="text-sm text-muted" style={{ marginBottom: 20 }}>
-                  Serviço: <strong>{service.name}</strong>
-                </p>
-                <DatePicker
-                  availability={availability}
-                  blockedDates={blockedDates}
-                  existingBookings={existingBookings ?? []}
-                  serviceDuration={service.duration_min}
-                  selected={date}
-                  onSelect={d => { setDate(d); setStep('time') }}
-                />
-                <Button variant="ghost" style={{ marginTop: 20 }} onClick={() => setStep('service')}>
-                  ← Voltar
-                </Button>
-              </div>
+              <DateStep
+                service={service}
+                availability={availability}
+                blockedDates={blockedDates}
+                existingBookings={existingBookings ?? []}
+                selected={date}
+                onSelect={d => { setDate(d); setStep('time') }}
+                onBack={() => setStep('service')}
+              />
             )}
 
             {step === 'time' && date && (
@@ -149,10 +141,10 @@ export default function BookingPage() {
 
             {step === 'client' && (
               <ClientStep
-                name={name}       setName={setName}
-                email={email}     setEmail={setEmail}
-                phone={phone}     setPhone={setPhone}
-                notes={notes}     setNotes={setNotes}
+                name={name}     setName={setName}
+                email={email}   setEmail={setEmail}
+                phone={phone}   setPhone={setPhone}
+                notes={notes}   setNotes={setNotes}
                 error={formErr}
                 onNext={() => {
                   if (!name.trim() || !email.trim() || !phone.trim()) {
@@ -169,14 +161,14 @@ export default function BookingPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <h2 className="booking-step-title">Confirmar agendamento</h2>
                 <div className="booking-summary">
-                  <SRow label="Serviço"   value={service.name} />
-                  <SRow label="Data"      value={format(date, "dd 'de' MMMM", { locale: undefined })} />
-                  <SRow label="Horário"   value={`${formatTime(time)} – ${calcEnd(time, service.duration_min)}`} mono />
-                  <SRow label="Valor"     value={formatBRL(service.price)} mono gold />
+                  <SRow label="Serviço"  value={service.name} />
+                  <SRow label="Data"     value={format(date, "dd/MM/yyyy")} />
+                  <SRow label="Horário"  value={`${formatTime(time)} – ${calcEndTime(time, service.duration_min)}`} mono />
+                  <SRow label="Valor"    value={formatBRL(service.price)} mono gold />
                   {service.deposit && <SRow label="Sinal" value={formatBRL(service.deposit)} mono />}
-                  <SRow label="Nome"      value={name} />
-                  <SRow label="Email"     value={email} />
-                  <SRow label="Telefone"  value={phone} />
+                  <SRow label="Nome"     value={name} />
+                  <SRow label="Email"    value={email} />
+                  <SRow label="Telefone" value={phone} />
                 </div>
 
                 {service.deposit && (
@@ -191,9 +183,14 @@ export default function BookingPage() {
                 )}
 
                 {formErr && <p className="form-error" style={{ textAlign: 'center' }}>{formErr}</p>}
+
                 <div style={{ display: 'flex', gap: 10 }}>
-                  <Button variant="ghost" onClick={() => setStep('client')} disabled={saving}>← Voltar</Button>
-                  <Button full loading={saving} onClick={handleSubmit}>Confirmar agendamento</Button>
+                  <Button variant="ghost" onClick={() => setStep('client')} disabled={saving}>
+                    ← Voltar
+                  </Button>
+                  <Button full loading={saving} onClick={handleSubmit}>
+                    Confirmar agendamento
+                  </Button>
                 </div>
               </div>
             )}
@@ -208,7 +205,9 @@ function SRow({ label, value, mono, gold }: { label: string; value: string; mono
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--color-border)' }}>
       <span className="text-sm text-muted">{label}</span>
-      <span className={['text-sm', mono ? 'text-mono' : '', gold ? 'text-gold' : ''].join(' ')} style={{ fontWeight: 600 }}>{value}</span>
+      <span className={['text-sm', mono ? 'text-mono' : '', gold ? 'text-gold' : ''].join(' ')} style={{ fontWeight: 600 }}>
+        {value}
+      </span>
     </div>
   )
 }

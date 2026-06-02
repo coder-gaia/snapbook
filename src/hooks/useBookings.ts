@@ -22,6 +22,30 @@ export function useBookings() {
     },
   })
 
+  const updateNotes = useMutation({
+  mutationFn: async ({
+    id,
+    notes,
+  }: {
+    id: string
+    notes: string
+  }) => {
+    const { error } = await supabase
+      .from('bookings')
+      .update({
+        photographer_notes: notes,
+      })
+      .eq('id', id)
+
+    if (error) throw error
+  },
+
+  onSuccess: () =>
+    qc.invalidateQueries({
+      queryKey: ['bookings'],
+    }),
+})
+
   const updateStatus = useMutation({
     mutationFn: async ({ id, status, notes }: {
       id: string
@@ -37,7 +61,7 @@ export function useBookings() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['bookings'] }),
   })
 
-  return { ...query, updateStatus }
+  return { ...query, updateStatus, updateNotes }
 }
 
 // Hook separado para a página pública — busca por slug sem auth

@@ -20,7 +20,12 @@ function statusLabel(status: Booking['status']): { label: string; variant: 'warn
 }
 
 export default function Agenda() {
-  const { data: bookings, isLoading, updateStatus } = useBookings()
+  const {
+  data: bookings,
+  isLoading,
+  updateStatus,
+  updateNotes,
+} = useBookings()
   const [filter, setFilter]   = useState<Status>('all')
   const [selected, setSelected] = useState<Booking | null>(null)
   const [notes, setNotes]     = useState('')
@@ -35,6 +40,23 @@ export default function Agenda() {
     setSelected(null)
     setNotes('')
   }
+  
+  async function handleSaveNotes() {
+  if (!selected) return
+
+  setSaving(true)
+
+  try {
+    await updateNotes.mutateAsync({
+      id: selected.id,
+      notes,
+    })
+
+    setSelected(null)
+  } finally {
+    setSaving(false)
+  }
+}
 
   if (isLoading) return <PageSkeleton />
 
@@ -73,7 +95,7 @@ export default function Agenda() {
             const s = statusLabel(b.status)
             return (
               <div key={b.id} className="card agenda-card"
-                onClick={() => { setSelected(b); setNotes('') }}
+                onClick={() => { setSelected(b); setNotes(b.photographer_notes ?? " ") }}
                 style={{ cursor: 'pointer' }}>
                 <div className="agenda-card-header">
                   <div>
@@ -134,6 +156,13 @@ export default function Agenda() {
               </div>
 
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <Button
+                  variant="secondary"
+                  onClick={handleSaveNotes}
+                  loading={saving}
+                >
+                  Salvar nota
+                </Button>
                 {selected.status === 'pending_payment' && (
                   <Button onClick={() => handleAction(selected.id, 'confirmed')} loading={saving}>
                     ✓ Confirmar

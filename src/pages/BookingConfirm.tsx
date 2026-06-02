@@ -70,7 +70,7 @@ export default function BookingConfirm() {
             </div>
           )}
 
-          <Button full onClick={() => navigate('/')}>Voltar ao início</Button>
+          <Button full onClick={() => navigate(`/book/${profile.slug}`)}> Agendar outro ensaio →</Button>
         </motion.div>
       </div>
     </div>
