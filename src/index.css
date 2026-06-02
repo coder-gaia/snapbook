@@ -1409,3 +1409,58 @@ select.form-input {
 .password-toggle:hover {
   opacity: 0.8;
 }
+
+/* ── Smart Alerts ───────────────────────────────────────────── */
+.smart-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+.smart-alert--danger {
+  background: var(--color-danger-dim);
+  border: 1px solid rgba(224, 92, 92, 0.25);
+  color: var(--color-danger);
+}
+.smart-alert--warning {
+  background: var(--color-warning-dim);
+  border: 1px solid rgba(232, 168, 56, 0.25);
+  color: var(--color-warning);
+}
+.smart-alert-msg {
+  flex: 1;
+  line-height: 1.5;
+}
+.smart-alert-action {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.smart-alert-action:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+.smart-alert-close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.smart-alert-close:hover {
+  opacity: 1;
+}
