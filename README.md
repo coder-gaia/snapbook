@@ -2,7 +2,7 @@
 
 Sistema de agendamento para fotógrafos autônomos brasileiros. O fotógrafo configura seus serviços e disponibilidade, recebe um link único e seus clientes agendam diretamente — sem precisar de conta, sem vai e vem no WhatsApp.
 
-🔗 **[Demo ao vivo](#)** — substitua pela URL após o deploy
+🔗 **[https://snapbook-virid.vercel.app/](#)**
 
 ---
 
