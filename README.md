@@ -92,7 +92,7 @@ export function generateSlots(
 }
 ```
 
-Isso garante que dois clientes nunca recebam o mesmo horário, mesmo que acessem a página simultaneamente.
+Isso reduz conflitos de agendamento ao impedir que horários ocupados sejam exibidos como disponíveis.
 
 ### RLS no Supabase — segurança no nível do banco
 
